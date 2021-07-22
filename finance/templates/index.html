@@ -1,0 +1,130 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Account Status and Holdings
+{% endblock %}
+
+{% block main %}
+    <div class="section" id="scorecards-container">
+        <div class="scorecard">
+            <p class="scorecard-label">
+                Available Funds
+            </p>
+            <p class="big-number" id="cash-balance">
+                {{ balance | usd }}
+            </p>
+        </div>
+        <div class="scorecard">
+            <p class="scorecard-label">
+                Portfolio Value (incl. Cash)
+            </p>
+            <p class="big-number" id="portfolio-value">
+                {{ value | usd }}
+            </p>
+        </div>
+    </div>
+    {% if stocks %}
+    <div class="section" id="portfolio-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Stock Symbol
+                    </th>
+                    <th>
+                        Stock Name
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Current Price
+                    </th>
+                    <th>
+                        Holding Value
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock in stocks %}
+                <tr>
+                    <td>
+                        {{ stock.stock_symbol }}
+                    </td>
+                    <td>
+                        {{ stock.stock_name }}
+                    </td>
+                    <td>
+                        {{ stock.total_quantity }}
+                    </td>
+                    <td>
+                        {{ stock.price | usd }}
+                    </td>
+                    <td>
+                        {{ stock.value | usd }}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4">
+                        CASH
+                    </td>
+                    <td>
+                        {{ balance | usd }}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>
+                        {{ value | usd }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    {% else %}
+    <div class="section" id="portfolio-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Stock Symbol
+                    </th>
+                    <th>
+                        Stock Name
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Current Price
+                    </th>
+                    <th>
+                        Holding Value
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="4">
+                        CASH
+                    </td>
+                    <td>
+                        {{ balance | usd }}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>
+                        {{ value | usd }}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}
