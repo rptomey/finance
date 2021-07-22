@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction History
+{% endblock %}
+
+{% block main %}
+    {% if transactions %}
+    <div class="section" id="portfolio-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Transaction ID
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        Stock Symbol
+                    </th>
+                    <th>
+                        Stock Name
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Price per Share
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>
+                            {{ transaction.transaction_id }}
+                        </td>
+                        <td>
+                            {{ transaction.date }}
+                        </td>
+                        <td>
+                            {{ transaction.type }}
+                        </td>
+                        <td>
+                            {{ transaction.stock_symbol }}
+                        </td>
+                        <td>
+                            {{ transaction.stock_name }}
+                        </td>
+                        <td>
+                            {{ transaction.quantity }}
+                        </td>
+                        <td>
+                            {{ transaction.price }}
+                        </td>
+                        {% if transaction.type == "SELL" %}
+                        <td class="td-negative">
+                            {{ transaction.amount }}
+                        </td>
+                        {% else %}
+                        <td>
+                            {{ transaction.amount }}
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+      No transaction history available.
+    </div>
+    {% endif %}
+{% endblock %}
